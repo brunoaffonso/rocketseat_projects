@@ -54,8 +54,8 @@ $livro = array_pop($filtrado);
             class="group rounded-xl border border-slate-800 bg-slate-800 p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
             <div class="flex gap-4">
                 <div class="relative h-28 w-20 shrink-0 overflow-hidden rounded-md ring-1 ring-slate-700">
-                    <img src="https://covers.openlibrary.org/b/isbn/9780132350884-L.jpg" alt="Capa do livro Clean Code"
-                        loading="lazy" class="h-full w-full object-cover" />
+                    <img src="<?= $livro['imagem'] ?>" alt="Capa do livro Clean Code" loading="lazy"
+                        class="h-full w-full object-cover" />
                 </div>
                 <div class="min-w-0">
                     <h3 class="truncate font-semibold group-hover:text-white">
