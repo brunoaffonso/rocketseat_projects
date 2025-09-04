@@ -2,6 +2,10 @@
 
 Pequeno protótipo de UI usando Tailwind via CDN.
 
+## Documentação
+
+- [Estrutura do Projeto](docs/estrutura-do-projeto.md)
+
 ## Rodar localmente
 
 ```bash
