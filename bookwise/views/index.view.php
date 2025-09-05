@@ -33,7 +33,7 @@
                 </div>
                 <div class="min-w-0">
                     <h3 class="truncate font-semibold group-hover:text-white">
-                        <a href="/livro.php?id=<?= $livro['id'] ?>" rel="noopener noreferrer"
+                        <a href="/livro?id=<?= $livro['id'] ?>" rel="noopener noreferrer"
                             class="hover:underline focus:underline"><?= $livro['titulo'] ?>
                         </a>
                     </h3>
