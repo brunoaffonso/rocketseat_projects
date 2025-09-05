@@ -22,11 +22,11 @@
                         class="text-emerald-400 hover:text-emerald-300 transition-colors">Explorar</a>
                 </li>
                 <li>
-                    <a href="/meus-livros.php" class="text-slate-300 hover:text-white transition-colors">Meus Livros</a>
+                    <a href="/meus-livros" class="text-slate-300 hover:text-white transition-colors">Meus Livros</a>
                 </li>
             </ul>
             <div class="flex items-center gap-3">
-                <a href="/login.php"
+                <a href="/login"
                     class="inline-flex items-center gap-2 rounded-md border border-slate-700 bg-slate-800 px-3 py-2 text-sm font-semibold text-slate-200 shadow-sm hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-slate-900">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
                         <path fill-rule="evenodd"
