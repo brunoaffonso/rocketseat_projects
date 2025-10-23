@@ -15,10 +15,12 @@ class DB
      * 
      * @return array[Livro]
      */
-    public function livros()
+    public function livros($buscar)
     {
-        $query = $this->db->query('SELECT * FROM livros');
-        $items = $query->fetchAll();
+        $prepare = $this->db->prepare('SELECT * FROM livros WHERE titulo LIKE :buscar OR descricao LIKE :buscar OR autor LIKE :buscar');
+        $prepare->bindValue(':buscar', '%' . $buscar . '%');
+        $prepare->execute();
+        $items = $prepare->fetchAll();
 
         return array_map(fn($item) => Livro::make($item), $items);
     }

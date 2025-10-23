@@ -2,7 +2,7 @@
     <h1 class="text-2xl font-bold tracking-tight">Explorar</h1>
 </section>
 <form action="#" method="get" class="mb-8">
-    <label for="q" class="sr-only">Buscar livros</label>
+    <label for="buscar" class="sr-only">Buscar livros</label>
     <div class="relative max-w-xl">
         <span class="pointer-events-none absolute inset-y-0 left-3 inline-flex items-center text-slate-400">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-5">
@@ -11,7 +11,7 @@
                     clip-rule="evenodd" />
             </svg>
         </span>
-        <input id="q" name="q" type="search" placeholder="Buscar livros..."
+        <input id="buscar" name="buscar" type="search" placeholder="Buscar livros..."
             class="w-full rounded-lg border border-slate-700 bg-slate-800 pl-10 pr-28 py-2.5 text-sm placeholder:text-slate-500 shadow-inner focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:ring-offset-2 focus:ring-offset-slate-900" />
         <button type="submit"
             class="absolute right-1 top-1/2 -translate-y-1/2 rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-semibold text-white shadow hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-400">
