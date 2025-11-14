@@ -28,7 +28,8 @@
 
                 <label class="block space-y-2 text-sm font-semibold text-slate-300">
                     <span>E-mail</span>
-                    <input type="email" id="email" name="email" required class="form-input" placeholder="email@exemplo.com">
+                    <input type="email" id="email" name="email" required class="form-input"
+                        placeholder="email@exemplo.com">
                     @error('email')
                         <span class="text-xs text-red-300">{{ $message }}</span>
                     @enderror
@@ -36,7 +37,8 @@
 
                 <label class="block space-y-2 text-sm font-semibold text-slate-300">
                     <span>Confirmar e-mail</span>
-                    <input type="email" id="email_confirmation" name="email_confirmation" required class="form-input" placeholder="Confirme o e-mail">
+                    <input type="email" id="email_confirmation" name="email_confirmation" required class="form-input"
+                        placeholder="Confirme o e-mail">
                     @error('email_confirmation')
                         <span class="text-xs text-red-300">{{ $message }}</span>
                     @enderror
@@ -44,7 +46,8 @@
 
                 <label class="block space-y-2 text-sm font-semibold text-slate-300">
                     <span>Senha</span>
-                    <input type="password" id="password" name="password" required class="form-input" placeholder="••••••••">
+                    <input type="password" id="password" name="password" required class="form-input"
+                        placeholder="••••••••">
                     @error('password')
                         <span class="text-xs text-red-300">{{ $message }}</span>
                     @enderror

@@ -36,10 +36,10 @@
                 <button type="submit" class="form-button">Entrar</button>
             </form>
 
-                <p class="text-center text-xs text-slate-400">
-                    Ainda não tem conta?
-                    <a href="{{ route('register') }}" class="font-semibold text-sky-300 underline-offset-4 hover:text-sky-200">
-                        Cadastre-se grátis
+            <p class="text-center text-xs text-slate-400">
+                Ainda não tem conta?
+                <a href="{{ route('register') }}" class="font-semibold text-sky-300 underline-offset-4 hover:text-sky-200">
+                    Cadastre-se grátis
                 </a>
             </p>
         </div>

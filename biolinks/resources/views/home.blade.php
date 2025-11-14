@@ -2,7 +2,8 @@
 
 @section('content')
     <div class="min-h-[90vh] px-4 py-12 sm:px-6 lg:px-12">
-        <div class="mx-auto flex max-w-6xl flex-col gap-10 rounded-[38px] border border-white/10 bg-gradient-to-br from-slate-900/60 via-slate-900/30 to-slate-950/70 p-8 shadow-[0_25px_90px_rgba(15,23,42,0.75)] lg:flex-row lg:items-center lg:justify-between">
+        <div
+            class="mx-auto flex max-w-6xl flex-col gap-10 rounded-[38px] border border-white/10 bg-gradient-to-br from-slate-900/60 via-slate-900/30 to-slate-950/70 p-8 shadow-[0_25px_90px_rgba(15,23,42,0.75)] lg:flex-row lg:items-center lg:justify-between">
             <div class="space-y-6 lg:max-w-xl">
                 <p class="text-xs font-semibold uppercase tracking-[0.6em] text-sky-400">Biolinks</p>
                 <h1 class="text-4xl font-semibold leading-tight text-white/90 sm:text-5xl">
@@ -13,7 +14,7 @@
                     telas pequenas, gestos e tipografia legível em qualquer resolução.
                 </p>
                 <div class="flex flex-wrap gap-4">
-                    <a href="{{ route('register') }}" class="form-button text-base">Começar agora</a>
+                    <a href="{{ route('register') }}" class="form-button text-base px-6 py-3">Começar agora</a>
                     <a href="{{ route('login') }}"
                         class="rounded-2xl border border-white/20 px-6 py-3 font-semibold text-white/90 transition hover:border-sky-400 hover:text-sky-200">
                         Já sou membro
@@ -21,10 +22,12 @@
                 </div>
             </div>
 
-            <div class="w-full max-w-md space-y-6 rounded-3xl bg-white/5 p-6 text-sm text-slate-100 shadow-xl backdrop-blur-2xl lg:max-w-[380px]">
+            <div
+                class="w-full max-w-md space-y-6 rounded-3xl bg-white/5 p-6 text-sm text-slate-100 shadow-xl backdrop-blur-2xl lg:max-w-[380px]">
                 <div class="flex items-center justify-between">
                     <p class="text-xs uppercase tracking-[0.4em] text-slate-400">Visão rápida</p>
-                    <span class="rounded-full border border-white/20 px-3 py-1 text-[11px] font-semibold text-slate-200">mobile</span>
+                    <span
+                        class="rounded-full border border-white/20 px-3 py-1 text-[11px] font-semibold text-slate-200">mobile</span>
                 </div>
                 <div class="space-y-3">
                     <div class="flex items-center justify-between text-sm text-slate-300">
@@ -38,7 +41,8 @@
                 <div class="space-y-4 pt-2 text-sm">
                     <p class="font-semibold text-white">Design adaptável</p>
                     <p class="text-slate-400">
-                        Componentes deslizam sem esforço entre o modo retrato e paisagem do celular, mantendo botões grandes e áreas touch-friendly.
+                        Componentes deslizam sem esforço entre o modo retrato e paisagem do celular, mantendo botões grandes
+                        e áreas touch-friendly.
                     </p>
                 </div>
                 <div class="flex items-center gap-2 text-xs text-slate-400">
@@ -50,7 +54,8 @@
 
         <div class="mx-auto mt-16 grid max-w-6xl gap-8 sm:grid-cols-2 lg:grid-cols-4">
             <div class="glass-card space-y-4">
-                <div class="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.4em] text-sky-400">
+                <div
+                    class="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.4em] text-sky-400">
                     <span>Mobile</span>
                     <span>100%</span>
                 </div>
@@ -60,7 +65,8 @@
                 </p>
             </div>
             <div class="glass-card space-y-4">
-                <div class="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.4em] text-sky-400">
+                <div
+                    class="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.4em] text-sky-400">
                     <span>Desktop</span>
                     <span>Pixel perfect</span>
                 </div>
@@ -70,7 +76,8 @@
                 </p>
             </div>
             <div class="glass-card space-y-4">
-                <div class="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.4em] text-sky-400">
+                <div
+                    class="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.4em] text-sky-400">
                     <span>Performance</span>
                     <span>Leve</span>
                 </div>
@@ -80,7 +87,8 @@
                 </p>
             </div>
             <div class="glass-card space-y-4">
-                <div class="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.4em] text-sky-400">
+                <div
+                    class="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.4em] text-sky-400">
                     <span>Suporte</span>
                     <span>24/7</span>
                 </div>
