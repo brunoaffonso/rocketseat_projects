@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LinkController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,7 +21,7 @@ Route::middleware('guest')->group(function () {
 
 // Learn note: middleware auth
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', fn() => 'dashboard :: ' . auth()->id())->name('dashboard');
+    Route::get('/dashboard', DashboardController::class)->name('dashboard');
     Route::get('/logout', LogoutController::class)->name('logout');
 
     Route::get('/links/create', [LinkController::class, 'create'])->name('links.create');
