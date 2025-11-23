@@ -5,7 +5,7 @@
     <ul>
         @foreach ($links as $link)
             <li>
-                <a href="links/{{ $link->id }}">{{ $link->name }}</a>
+                <a href="{{ route('links.edit', $link) }}">{{ $link->name }}</a>
             </li>
         @endforeach
     </ul>
