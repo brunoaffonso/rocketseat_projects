@@ -63,4 +63,30 @@ class LinkController extends Controller
 
         return to_route('dashboard')->with('message', 'Link deletado com sucesso!');
     }
+
+    public function moveUp(Link $link)
+    {
+        /** @var User $user */
+        $user = auth()->user();
+
+        $currentOrderNum = $link->order_num;
+        $swapLink = $user->links()->where('order_num', $currentOrderNum - 1)->first();
+        $link->fill(['order_num' => $swapLink->order_num])->save();
+        $swapLink->fill(['order_num' => $currentOrderNum])->save();
+
+        return to_route('dashboard')->with('message', 'Link moved up successfully!');
+    }
+
+    public function moveDown(Link $link)
+    {
+        /** @var User $user */
+        $user = auth()->user();
+
+        $currentOrderNum = $link->order_num;
+        $swapLink = $user->links()->where('order_num', $currentOrderNum + 1)->first();
+        $link->fill(['order_num' => $swapLink->order_num])->save();
+        $swapLink->fill(['order_num' => $currentOrderNum])->save();
+
+        return to_route('dashboard')->with('message', 'Link moved down successfully!');
+    }
 }

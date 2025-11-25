@@ -28,5 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/links', [LinkController::class, 'store'])->name('links.store');
     Route::get('/links/{link}/edit', [LinkController::class, 'edit'])->name('links.edit');
     Route::put('/links/{link}/edit', [LinkController::class, 'update']);
+    Route::patch('/links/{link}/down', [LinkController::class, 'moveDown'])->name('links.down');
+    Route::patch('/links/{link}/up', [LinkController::class, 'moveUp'])->name('links.up');
     Route::delete('/links/{link}', [LinkController::class, 'destroy'])->name('links.destroy');
 });

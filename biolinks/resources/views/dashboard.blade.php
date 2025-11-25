@@ -42,42 +42,89 @@
                     </a>
                 </div>
             @else
-                <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div class="space-y-3">
                     @foreach ($links as $link)
-                        <div
-                            class="glass-card group space-y-4 transition-all duration-300 hover:scale-[1.02] hover:border-sky-400/50">
-                            <div class="flex items-start justify-between">
-                                <div class="flex-1 space-y-2">
-                                    <h3 class="text-lg font-semibold text-white/90 group-hover:text-sky-400 transition">
-                                        {{ $link->name }}
-                                    </h3>
-                                    @if ($link->url)
-                                        <p class="text-xs text-slate-400 break-all">{{ Str::limit($link->url, 40) }}</p>
+                        <div class="glass-card group transition-all duration-300 hover:border-sky-400/50 !p-3">
+                            <div class="flex items-center gap-3">
+                                <!-- Controles de Ordenação -->
+                                <div class="flex items-center gap-1">
+                                    @if (!$loop->first)
+                                        <form action="{{ route('links.up', $link) }}" method="post">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit"
+                                                class="rounded-lg bg-sky-500/10 p-2 text-sky-400 transition hover:bg-sky-500/20"
+                                                title="Mover para cima">
+                                                <svg class="h-4 w-4" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M5 15l7-7 7 7" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    @else
+                                        <div class="w-10"></div>
+                                    @endif
+                                    {{-- <div>{{ $link->order_num }}</div> --}}
+                                    @if (!$loop->last)
+                                        <form action="{{ route('links.down', $link) }}" method="post">
+                                            @csrf
+                                            @method('PATCH')
+                                            <button type="submit"
+                                                class="rounded-lg bg-sky-500/10 p-2 text-sky-400 transition hover:bg-sky-500/20"
+                                                title="Mover para baixo">
+                                                <svg class="h-4 w-4" fill="none" stroke="currentColor"
+                                                    viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                        d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    @else
+                                        <div class="w-10"></div>
                                     @endif
                                 </div>
-                                <span class="rounded-full bg-sky-500/10 px-3 py-1 text-xs font-semibold text-sky-400">
-                                    ativo
-                                </span>
-                            </div>
 
-                            @if ($link->description)
-                                <p class="text-sm text-slate-300 line-clamp-2">{{ $link->description }}</p>
-                            @endif
+                                <!-- Informações do Link -->
+                                <div class="flex-1 space-y-2">
+                                    <div class="flex items-start justify-between gap-4">
+                                        <div class="flex-1">
+                                            <h3
+                                                class="text-lg font-semibold text-white/90 group-hover:text-sky-400 transition">
+                                                {{ $link->name }}
+                                            </h3>
+                                            @if ($link->url)
+                                                <p class="text-xs text-slate-400 break-all mt-1">
+                                                    {{ Str::limit($link->url, 60) }}</p>
+                                            @endif
+                                            @if ($link->description)
+                                                <p class="text-sm text-slate-300 mt-2 line-clamp-2">{{ $link->description }}
+                                                </p>
+                                            @endif
+                                        </div>
+                                        <span
+                                            class="rounded-full bg-sky-500/10 px-3 py-1 text-xs font-semibold text-sky-400 whitespace-nowrap">
+                                            ativo
+                                        </span>
+                                    </div>
+                                </div>
 
-                            <div class="flex items-center gap-3 border-t border-white/10 pt-4">
-                                <a href="{{ route('links.edit', $link) }}"
-                                    class="flex-1 rounded-xl border border-white/20 px-4 py-2 text-center text-sm font-semibold text-white/90 transition hover:border-sky-400 hover:text-sky-400">
-                                    Editar
-                                </a>
-                                <form action="{{ route('links.destroy', $link) }}" method="POST"
-                                    onsubmit="return confirm('Tem certeza que deseja excluir este link?')" class="flex-1">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        class="w-full rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-400 transition hover:border-red-400 hover:bg-red-500/20">
-                                        Excluir
-                                    </button>
-                                </form>
+                                <!-- Ações -->
+                                <div class="flex items-center gap-2">
+                                    <a href="{{ route('links.edit', $link) }}"
+                                        class="rounded-xl border border-white/20 px-4 py-2 text-sm font-semibold text-white/90 transition hover:border-sky-400 hover:text-sky-400">
+                                        Editar
+                                    </a>
+                                    <form action="{{ route('links.destroy', $link) }}" method="POST"
+                                        onsubmit="return confirm('Tem certeza que deseja excluir este link?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="rounded-xl border border-red-500/20 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-400 transition hover:border-red-400 hover:bg-red-500/20">
+                                            Excluir
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     @endforeach
