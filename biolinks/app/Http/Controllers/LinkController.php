@@ -31,7 +31,13 @@ class LinkController extends Controller
 
         /** @var User $user */
         $user = auth()->user();
-        $user->links()->create($request->validated());
+        $order_num = ($user->links()->max('order_num') ?? 0) + 1;
+        $user->links()->create(
+            array_merge(
+                $request->validated(),
+                ['order_num' => $order_num]
+            )
+        );
 
         return to_route('dashboard');
     }
@@ -60,6 +66,10 @@ class LinkController extends Controller
      */
     public function destroy(Link $link)
     {
+        $this->authorize('delete', $link);
+        while ($link->order_num !== $link->user->links()->max('order_num')) {
+            $link->move('down');
+        }
         $link->delete();
 
         return to_route('dashboard')->with('message', 'Link deletado com sucesso!');

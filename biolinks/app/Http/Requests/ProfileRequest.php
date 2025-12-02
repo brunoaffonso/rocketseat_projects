@@ -3,8 +3,9 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class StoreLinkRequest extends FormRequest
+class ProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,8 +23,13 @@ class StoreLinkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'link' => ['required', 'url'],
-            'name' => ['nullable', 'string', 'min:3', 'max:255'],
+            'name' => ['required', 'min:3', 'max:30'],
+            'description' => ['nullable'],
+            'handler' => [
+                'required',
+                // 'unique:users,handler,' . $this->user()->id
+                Rule::unique('users')->ignoreModel($this->user()),
+            ],
         ];
     }
 }

@@ -15,6 +15,14 @@
                         class="inline-flex items-center justify-center rounded-2xl bg-sky-500 px-6 py-3 text-base font-semibold text-white shadow-[0_20px_60px_rgba(14,165,233,0.45)] transition duration-200 hover:bg-sky-400">
                         + Criar Link
                     </a>
+                    <a href="{{ route('profile') }}"
+                        class="inline-flex items-center justify-center rounded-2xl border border-white/20 px-6 py-3 text-base font-semibold text-white/90 transition hover:border-sky-400 hover:text-sky-400">
+                        <svg class="mr-2 h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        Perfil
+                    </a>
                     <a href="{{ route('logout') }}"
                         class="inline-flex items-center justify-center rounded-2xl border border-white/20 px-6 py-3 text-base font-semibold text-white/90 transition hover:border-red-400 hover:text-red-400">
                         Sair

@@ -10,8 +10,15 @@ class LinkPolicy
 {
     public function edit(User $user, Link $link): Response
     {
-        return $link->user->is($user) 
-            ? Response::allow() 
+        return $link->user->is($user)
+            ? Response::allow()
+            : Response::deny('Esse link não é seu!');
+    }
+
+    function delete(User $user, Link $link): Response
+    {
+        return $link->user->is($user)
+            ? Response::allow()
             : Response::deny('Esse link não é seu!');
     }
 }
