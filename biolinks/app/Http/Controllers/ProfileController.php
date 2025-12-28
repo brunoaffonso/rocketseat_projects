@@ -18,10 +18,16 @@ class ProfileController extends Controller
 
     public function update(ProfileRequest $request)
     {
-        /**@var User $user */
+        /** @var User $user */
         $user = auth()->user();
 
-        $user->fill($request->validated())->save();
+        $data = $request->validated();
+        
+        if ($file = $request->photo) {
+            $data['photo'] = $file->store('photos');
+        }
+
+        $user->fill($data)->save();
 
         return back()
             ->with(
