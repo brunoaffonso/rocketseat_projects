@@ -1,0 +1,15 @@
+{
+    "agents": [
+        "codex",
+        "copilot",
+        "cursor",
+        "gemini"
+    ],
+    "editors": [
+        "codex",
+        "cursor",
+        "gemini",
+        "vscode"
+    ],
+    "guidelines": []
+}
