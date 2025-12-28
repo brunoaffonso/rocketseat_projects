@@ -1,13 +1,25 @@
 # Projetos Rocketseat
 
-Este repositório reúne pequenos projetos/estudos. No momento, ele contém o projeto Book Wise.
+Este repositório reúne projetos e estudos desenvolvidos durante a trilha da Rocketseat. Atualmente contém os projetos **Book Wise** e **Bio Links**.
 
-## Book Wise ([acessar o projeto](bookwise/))
+## 🔗 Bio Links ([acessar o projeto](biolinks/))
 
-- Descrição: protótipo de interface de uma aplicação de livros (home, login, detalhes de livro e "meus livros").
-- Tecnologias: HTML/PHP para estrutura e rotas simples, Tailwind via CDN (@tailwindcss/browser@4). Sem backend real; formulários são mocks.
-- Como executar localmente:
-  1) cd bookwise
-  2) php -S localhost:8000 -t .
-  3) Acesse http://localhost:8000/
-- Saiba mais: consulte o README do projeto em [bookwise/README.md](bookwise/README.md)
+- **Descrição**: Plataforma de agregação de links (Linktree clone) para criação de perfis personalizáveis.
+- **Tecnologias**: Laravel 12, Blade, Vanilla CSS, SQLite.
+- **Como executar localmente**:
+  1) `cd biolinks`
+  2) `composer run setup`
+  3) `php artisan serve`
+- **Saiba mais**: Consulte o [README do biolinks](biolinks/README.md)
+
+---
+
+## 📚 Book Wise ([acessar o projeto](bookwise/))
+
+- **Descrição**: Protótipo de interface de uma aplicação de livros (home, login, detalhes de livro e "meus livros").
+- **Tecnologias**: HTML/PHP para estrutura e rotas simples, Tailwind via CDN. Sem backend real.
+- **Como executar localmente**:
+  1) `cd bookwise`
+  2) `php -S localhost:8000 -t .`
+- **Saiba mais**: Consulte o [README do bookwise](bookwise/README.md)
+
