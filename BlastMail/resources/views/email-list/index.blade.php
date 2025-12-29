@@ -57,7 +57,9 @@
                             <x-table.td>{{ $emailList->subscribers_count }}</x-table.td>
                             <x-table.td>{{ $emailList->created_at->format('d/m/Y H:i') }}</x-table.td>
                             <x-table.td class="text-right">
-                                <!-- Actions like Edit/Delete can be added here -->
+                                <a href="{{ route('subscribers.index', $emailList) }}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">
+                                    {{ __('View Subscribers') }}
+                                </a>
                             </x-table.td>
                         </x-table.tr>
                     @empty
