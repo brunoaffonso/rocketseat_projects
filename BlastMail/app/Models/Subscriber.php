@@ -9,4 +9,15 @@ class Subscriber extends Model
 {
     /** @use HasFactory<\Database\Factories\SubscriberFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'email_list_id',
+        'name',
+        'email',
+    ];
+
+    public function emailList(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(EmailList::class);
+    }
 }

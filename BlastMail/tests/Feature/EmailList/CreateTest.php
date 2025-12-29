@@ -29,7 +29,7 @@ class CreateTest extends TestCase
     {
         $user = \App\Models\User::factory()->create();
 
-        $csvContent = "email,name\ntest@example.com,Test User\nanother@example.com,Another User";
+        $csvContent = "nome,email\nTest User,test@example.com\nAnother User,another@example.com";
         $file = \Illuminate\Http\UploadedFile::fake()->createWithContent('list.csv', $csvContent);
 
         $response = $this->actingAs($user)->post(route('email-list.store'), [
@@ -40,6 +40,16 @@ class CreateTest extends TestCase
         $response->assertRedirect(route('email-list.index'));
         $this->assertDatabaseHas('email_lists', [
             'title' => 'My Test List',
+        ]);
+
+        $this->assertDatabaseHas('subscribers', [
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+        ]);
+
+        $this->assertDatabaseHas('subscribers', [
+            'name' => 'Another User',
+            'email' => 'another@example.com',
         ]);
     }
 }

@@ -1,4 +1,3 @@
-```
 @props([
     'post' => null,
     'hasFile' => false,
@@ -13,4 +12,3 @@
     @csrf
     {{ $slot }}
 </form>
-```

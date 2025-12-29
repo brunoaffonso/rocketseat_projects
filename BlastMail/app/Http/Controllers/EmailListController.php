@@ -42,9 +42,18 @@ class EmailListController extends Controller
         $file = $request->file('listFile');
 
         if ($handle = fopen($file->getRealPath(), 'r')) {
+            $header = true;
             while (($row = fgetcsv($handle, 1000, ',')) !== false) {
-                // TODO: Process rows here
-                // dump($row);
+                if ($header) {
+                    $header = false;
+
+                    continue;
+                }
+
+                $emailList->subscribers()->create([
+                    'name' => $row[0],
+                    'email' => $row[1],
+                ]);
             }
             fclose($handle);
         }
