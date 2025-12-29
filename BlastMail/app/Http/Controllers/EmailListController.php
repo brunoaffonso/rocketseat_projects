@@ -15,7 +15,7 @@ class EmailListController extends Controller
     public function index()
     {
         return view('email-list.index', [
-            'emailLists' => EmailList::query()->paginate(),
+            'emailLists' => EmailList::query()->withCount('subscribers')->latest()->paginate(),
         ]);
     }
 
@@ -66,7 +66,7 @@ class EmailListController extends Controller
                     }
 
                     if ($emailList->subscribers()->where('email', $row[1])->exists()) {
-                        throw new \Exception('Duplicate email found in CSV: ' . $row[1]);
+                        throw new \Exception('Duplicate email found in CSV: '.$row[1]);
                     }
 
                     $emailList->subscribers()->create([
