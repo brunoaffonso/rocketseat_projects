@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\EmailList;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class EmailListController extends Controller
 {
@@ -35,28 +37,46 @@ class EmailListController extends Controller
             'listFile' => 'required|file|mimes:csv,txt',
         ]);
 
-        $emailList = EmailList::query()->create([
-            'title' => $request->title,
-        ]);
-
         $file = $request->file('listFile');
 
-        if ($handle = fopen($file->getRealPath(), 'r')) {
-            $header = true;
-            while (($row = fgetcsv($handle, 1000, ',')) !== false) {
-                if ($header) {
-                    $header = false;
+        DB::transaction(function () use ($request, $file) {
+            $emailList = EmailList::query()->create([
+                'title' => $request->title,
+            ]);
 
-                    continue;
+            if ($handle = fopen($file->getRealPath(), 'r')) {
+                $header = true;
+                while (($row = fgetcsv($handle, 1000, ',')) !== false) {
+                    if ($header) {
+                        $header = false;
+
+                        continue;
+                    }
+
+                    $validator = Validator::make([
+                        'name' => $row[0] ?? null,
+                        'email' => $row[1] ?? null,
+                    ], [
+                        'name' => 'required|string|max:255',
+                        'email' => 'required|email|max:255',
+                    ]);
+
+                    if ($validator->fails()) {
+                        throw new \Exception('Invalid CSV row data.');
+                    }
+
+                    if ($emailList->subscribers()->where('email', $row[1])->exists()) {
+                        throw new \Exception('Duplicate email found in CSV: ' . $row[1]);
+                    }
+
+                    $emailList->subscribers()->create([
+                        'name' => $row[0],
+                        'email' => $row[1],
+                    ]);
                 }
-
-                $emailList->subscribers()->create([
-                    'name' => $row[0],
-                    'email' => $row[1],
-                ]);
+                fclose($handle);
             }
-            fclose($handle);
-        }
+        });
 
         return to_route('email-list.index');
     }
