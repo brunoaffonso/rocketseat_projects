@@ -12,10 +12,17 @@ class EmailListController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         return view('email-list.index', [
-            'emailLists' => EmailList::query()->withCount('subscribers')->latest()->paginate(),
+            'emailLists' => EmailList::query()
+                ->withCount('subscribers')
+                ->when($request->search, function ($query, $search) {
+                    return $query->where('title', 'like', "%{$search}%");
+                })
+                ->latest()
+                ->paginate()
+                ->withQueryString(),
         ]);
     }
 
