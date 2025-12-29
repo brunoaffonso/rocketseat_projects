@@ -15,6 +15,9 @@ class SubscriberController extends Controller
         return view('subscribers.index', [
             'emailList' => $emailList,
             'subscribers' => $emailList->subscribers()
+                ->when($request->show_deleted, function ($query) {
+                    return $query->withTrashed();
+                })
                 ->when($request->search, function ($query, $search) {
                     return $query->where(function ($q) use ($search) {
                         $q->where('name', 'like', "%{$search}%")
@@ -30,17 +33,26 @@ class SubscriberController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(EmailList $emailList)
     {
-        //
+        return view('subscribers.create', [
+            'emailList' => $emailList,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, EmailList $emailList)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+        ]);
+
+        $emailList->subscribers()->create($validated);
+
+        return to_route('subscribers.index', $emailList);
     }
 
     /**
@@ -70,8 +82,11 @@ class SubscriberController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(EmailList $emailList, string $id)
     {
-        //
+        $subscriber = $emailList->subscribers()->findOrFail($id);
+        $subscriber->delete();
+
+        return to_route('subscribers.index', $emailList);
     }
 }

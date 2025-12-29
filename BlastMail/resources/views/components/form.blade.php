@@ -1,14 +1,16 @@
 @props([
     'post' => null,
+    'action' => null,
     'hasFile' => false,
 ])
 
 @php
-    $method = $post ? 'POST' : 'GET';
+    $url = $post ?? $action;
+    $method = $post || $attributes->has('post') ? 'POST' : 'GET';
 @endphp
 
-<form {{ $attributes->class(['space-y-4']) }} method="{{ $method }}"
-    @if ($hasFile) enctype="multipart/form-data" @endif>
+<form {{ $attributes->except(['post', 'has-file'])->class(['space-y-4']) }} method="{{ $method }}" action="{{ $url }}"
+    @if ($hasFile || $attributes->has('has-file')) enctype="multipart/form-data" @endif>
     @csrf
     {{ $slot }}
 </form>
