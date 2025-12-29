@@ -6,8 +6,15 @@
     </x-slot>
 
     <x-card>
+        <div class="flex justify-center">
+            <x-link-button href="{{ route('email-list.create') }}">
+                {{ __('Create Email List') }}
+            </x-link-button>
+        </div>
         @forelse ($emailLists as $emailList)
-            {{ $emailList->title }}
+            <div class="flex justify-between">
+                <p>{{ $emailList->title }}</p>
+            </div>
         @empty
             <div class="flex justify-center">
                 <x-link-button href="{{ route('email-list.create') }}">

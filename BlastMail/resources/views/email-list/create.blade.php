@@ -6,16 +6,16 @@
     </x-slot>
 
     <x-card>
-        <x-form :action="route('email-list.store')" post>
+        <x-form :action="route('email-list.store')" post has-file>
             <div class="mb-4">
                 <x-input-label for="title" :value="__('Title')" />
                 <x-text-input id="title" name="title" class="mt-1 block w-full" :value="old('title')" autofocus />
                 <x-input-error :messages="$errors->get('title')" class="mt-2" />
             </div>
             <div class="mb-4">
-                <x-input-label for="file" :value="__('File List')" />
-                <x-text-input id="file" name="file" class="mt-1 block w-full" type="file" />
-                <x-input-error :messages="$errors->get('file')" class="mt-2" />
+                <x-input-label for="listFile" :value="__('File List')" />
+                <x-text-input id="listFile" name="listFile" class="mt-1 block w-full" type="file" accept=".csv" />
+                <x-input-error :messages="$errors->get('listFile')" class="mt-2" />
             </div>
             <div class="flex items-center space-x-4">
                 <x-secondary-button type="reset">
