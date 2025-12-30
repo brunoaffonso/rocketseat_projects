@@ -47,7 +47,14 @@ class SubscriberController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                \Illuminate\Validation\Rule::unique('subscribers')
+                    ->where('email_list_id', $emailList->id)
+                    ->whereNull('deleted_at'),
+            ],
         ]);
 
         $emailList->subscribers()->create($validated);

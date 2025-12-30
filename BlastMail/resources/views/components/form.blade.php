@@ -5,8 +5,8 @@
 ])
 
 @php
-    $url = $post ?? $action;
-    $method = $post || $attributes->has('post') ? 'POST' : 'GET';
+    $url = is_string($post) ? $post : $action;
+    $method = ($post !== null || $attributes->has('post')) ? 'POST' : 'GET';
 @endphp
 
 <form {{ $attributes->except(['post', 'has-file'])->class(['space-y-4']) }} method="{{ $method }}" action="{{ $url }}"

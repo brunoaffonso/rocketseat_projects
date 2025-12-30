@@ -41,7 +41,7 @@ class EmailListController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
-            'listFile' => 'required|file|mimes:csv,txt',
+            'listFile' => 'file|mimes:csv,txt',
         ]);
 
         $file = $request->file('listFile');
@@ -51,7 +51,8 @@ class EmailListController extends Controller
                 'title' => $request->title,
             ]);
 
-            if ($handle = fopen($file->getRealPath(), 'r')) {
+            if ($file) {
+                $handle = fopen($file->getRealPath(), 'r');
                 $header = true;
                 while (($row = fgetcsv($handle, 1000, ',')) !== false) {
                     if ($header) {
@@ -73,7 +74,7 @@ class EmailListController extends Controller
                     }
 
                     if ($emailList->subscribers()->where('email', $row[1])->exists()) {
-                        throw new \Exception('Duplicate email found in CSV: '.$row[1]);
+                        throw new \Exception('Duplicate email found in CSV: ' . $row[1]);
                     }
 
                     $emailList->subscribers()->create([
