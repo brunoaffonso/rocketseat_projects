@@ -24,8 +24,8 @@ class SubscriberController extends Controller
                             ->orWhere('email', 'like', "%{$search}%");
                     });
                 })
-                ->latest()
-                ->paginate()
+                ->orderBy('name', 'asc')
+                ->paginate(10)
                 ->withQueryString(),
         ]);
     }

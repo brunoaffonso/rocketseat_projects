@@ -44,6 +44,7 @@
                 <x-table>
                 <x-table.thead>
                     <x-table.tr>
+                        <x-table.th>#</x-table.th>
                         <x-table.th>{{ __('Title') }}</x-table.th>
                         <x-table.th>{{ __('Subscribers') }}</x-table.th>
                         <x-table.th>{{ __('Created At') }}</x-table.th>
@@ -53,6 +54,7 @@
                 <x-table.tbody>
                     @forelse ($emailLists as $emailList)
                         <x-table.tr>
+                            <x-table.td>{{ $emailList->id }}</x-table.td>
                             <x-table.td>{{ $emailList->title }}</x-table.td>
                             <x-table.td>{{ $emailList->subscribers_count }}</x-table.td>
                             <x-table.td>{{ $emailList->created_at->format('d/m/Y H:i') }}</x-table.td>

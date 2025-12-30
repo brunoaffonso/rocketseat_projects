@@ -20,8 +20,8 @@ class EmailListController extends Controller
                 ->when($request->search, function ($query, $search) {
                     return $query->where('title', 'like', "%{$search}%");
                 })
-                ->latest()
-                ->paginate()
+                ->orderBy('title', 'asc')
+                ->paginate(10)
                 ->withQueryString(),
         ]);
     }

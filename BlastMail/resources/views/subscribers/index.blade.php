@@ -67,6 +67,7 @@
                 <x-table>
                     <x-table.thead>
                         <x-table.tr>
+                            <x-table.th>#</x-table.th>
                             <x-table.th>{{ __('Name') }}</x-table.th>
                             <x-table.th>{{ __('Email') }}</x-table.th>
                             <x-table.th>{{ __('Created At') }}</x-table.th>
@@ -76,6 +77,7 @@
                     <x-table.tbody>
                         @forelse ($subscribers as $subscriber)
                             <x-table.tr>
+                                <x-table.td>{{ $subscriber->id }}</x-table.td>
                                 <x-table.td>{{ $subscriber->name }}</x-table.td>
                                 <x-table.td>{{ $subscriber->email }}</x-table.td>
                                 <x-table.td>{{ $subscriber->created_at->format('d/m/Y H:i') }}</x-table.td>
