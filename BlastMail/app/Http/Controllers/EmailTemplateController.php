@@ -14,8 +14,12 @@ class EmailTemplateController extends Controller
     {
         $query = EmailTemplate::query();
 
+        if ($request->has('show_deleted')) {
+            $query->withTrashed();
+        }
+
         if ($request->has('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%');
+            $query->where('name', 'like', '%'.$request->search.'%');
         }
 
         $emailTemplates = $query->latest()->paginate(10);
@@ -33,6 +37,13 @@ class EmailTemplateController extends Controller
         EmailTemplate::create($request->validated());
 
         return to_route('email-templates.index')->with('success', __('Template created successfully.'));
+    }
+
+    public function show(string $id): View
+    {
+        $emailTemplate = EmailTemplate::withTrashed()->findOrFail($id);
+
+        return view('email-templates.show', compact('emailTemplate'));
     }
 
     public function edit(EmailTemplate $emailTemplate): View

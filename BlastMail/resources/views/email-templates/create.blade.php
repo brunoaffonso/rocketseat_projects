@@ -44,5 +44,27 @@
 
     @push('scripts')
         <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var quill = new Quill('#editor-container', {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            [{ 'header': [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            ['link', 'blockquote', 'code-block'],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                            ['clean']
+                        ]
+                    }
+                });
+
+                var form = document.querySelector('#template-form');
+                form.onsubmit = function () {
+                    var body = document.querySelector('input[name=body]');
+                    body.value = quill.root.innerHTML;
+                };
+            });
+        </script>
     @endpush
 </x-layouts.app>

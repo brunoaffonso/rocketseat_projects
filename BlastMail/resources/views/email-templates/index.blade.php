@@ -10,13 +10,25 @@
             <x-card class="p-0 overflow-hidden">
                 <div
                     class="p-4 bg-gray-50 border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700 flex justify-between items-center">
-                    <div>
+                    <div class="flex items-center gap-4">
                         <x-link-button href="{{ route('email-templates.create') }}">
                             {{ __('Create Template') }}
                         </x-link-button>
+
+                        <label class="inline-flex items-center cursor-pointer">
+                            <input type="checkbox"
+                                name="show_deleted"
+                                value="1"
+                                {{ request('show_deleted') ? 'checked' : '' }}
+                                onchange="this.form.submit()"
+                                form="search-form"
+                                class="rounded dark:bg-gray-900 border-gray-300 dark:border-gray-700 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:focus:ring-indigo-600 dark:focus:ring-offset-gray-800"
+                            >
+                            <span class="ms-2 text-sm text-gray-600 dark:text-gray-400">{{ __('Show Deleted') }}</span>
+                        </label>
                     </div>
 
-                    <form x-data="{
+                    <form id="search-form" x-data="{
                             search: '{{ request('search') }}',
                             submit() {
                                 if (this.search.length === 0 || this.search.length >= 3) {
@@ -53,18 +65,30 @@
                                 <x-table.td>{{ $template->created_at->format('d/m/Y H:i') }}</x-table.td>
                                 <x-table.td class="text-right">
                                     <div class="flex justify-end items-center gap-2">
-                                        <a href="{{ route('email-templates.edit', $template) }}">
-                                            <x-secondary-button size="sm">
-                                                {{ __('Edit') }}
+                                        <a href="{{ route('email-templates.show', $template) }}">
+                                            <x-secondary-button size="sm" class="bg-indigo-50 dark:bg-indigo-900 border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300">
+                                                {{ __('Preview') }}
                                             </x-secondary-button>
                                         </a>
 
-                                        <x-form :delete="route('email-templates.destroy', $template)" class="m-0">
-                                            <x-danger-button size="sm" type="submit"
-                                                onclick="return confirm('{{ __('Are you sure you want to delete this template?') }}')">
-                                                {{ __('Delete') }}
+                                        @if($template->trashed())
+                                            <x-danger-button type="button" disabled class="opacity-50 cursor-not-allowed">
+                                                {{ __('Deleted') }}
                                             </x-danger-button>
-                                        </x-form>
+                                        @else
+                                            <a href="{{ route('email-templates.edit', $template) }}">
+                                                <x-secondary-button size="sm">
+                                                    {{ __('Edit') }}
+                                                </x-secondary-button>
+                                            </a>
+
+                                            <x-form :delete="route('email-templates.destroy', $template)" class="m-0">
+                                                <x-danger-button size="sm" type="submit"
+                                                    onclick="return confirm('{{ __('Are you sure you want to delete this template?') }}')">
+                                                    {{ __('Delete') }}
+                                                </x-danger-button>
+                                            </x-form>
+                                        @endif
                                     </div>
                                 </x-table.td>
                             </x-table.tr>

@@ -118,6 +118,8 @@ class EmailListController extends Controller
      */
     public function destroy(EmailList $emailList)
     {
-        //
+        $emailList->delete();
+
+        return to_route('email-list.index')->with('success', 'Email list deleted successfully.');
     }
 }
