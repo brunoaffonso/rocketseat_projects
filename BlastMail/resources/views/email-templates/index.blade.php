@@ -51,19 +51,21 @@
                                 <x-table.td>{{ $template->id }}</x-table.td>
                                 <x-table.td>{{ $template->name }}</x-table.td>
                                 <x-table.td>{{ $template->created_at->format('d/m/Y H:i') }}</x-table.td>
-                                <x-table.td class="text-right flex justify-end space-x-2">
-                                    <a href="{{ route('email-templates.edit', $template) }}">
-                                        <x-secondary-button size="sm">
-                                            {{ __('Edit') }}
-                                        </x-secondary-button>
-                                    </a>
+                                <x-table.td class="text-right">
+                                    <div class="flex justify-end items-center gap-2">
+                                        <a href="{{ route('email-templates.edit', $template) }}">
+                                            <x-secondary-button size="sm">
+                                                {{ __('Edit') }}
+                                            </x-secondary-button>
+                                        </a>
 
-                                    <x-form :delete="route('email-templates.destroy', $template)" class="inline">
-                                        <x-danger-button size="sm" type="submit"
-                                            onclick="return confirm('{{ __('Are you sure you want to delete this template?') }}')">
-                                            {{ __('Delete') }}
-                                        </x-danger-button>
-                                    </x-form>
+                                        <x-form :delete="route('email-templates.destroy', $template)" class="m-0">
+                                            <x-danger-button size="sm" type="submit"
+                                                onclick="return confirm('{{ __('Are you sure you want to delete this template?') }}')">
+                                                {{ __('Delete') }}
+                                            </x-danger-button>
+                                        </x-form>
+                                    </div>
                                 </x-table.td>
                             </x-table.tr>
                         @empty
