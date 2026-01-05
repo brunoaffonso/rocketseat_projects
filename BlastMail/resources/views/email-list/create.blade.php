@@ -6,7 +6,7 @@
     </x-slot>
 
     <x-card>
-        <x-form :action="route('email-list.store')" post has-file>
+        <x-form :post="route('email-list.store')" has-file>
             <div class="mb-4">
                 <x-input-label for="title" :value="__('Title')" />
                 <x-text-input id="title" name="title" class="mt-1 block w-full" :value="old('title')" autofocus />
@@ -27,4 +27,4 @@
             </div>
         </x-form>
     </x-card>
-</x-layouts.app> 
+</x-layouts.app>
