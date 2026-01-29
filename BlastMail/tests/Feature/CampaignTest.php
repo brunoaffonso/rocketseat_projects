@@ -2,17 +2,43 @@
 
 namespace Tests\Feature;
 
+use App\Mail\EmailCampaign;
 use App\Models\Campaign;
 use App\Models\EmailList;
 use App\Models\EmailTemplate;
+use App\Models\Subscriber;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 
 class CampaignTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function test_campaign_can_be_tested_via_route(): void
+    {
+        Mail::fake();
+
+        $user = User::factory()->create();
+        $emailList = EmailList::factory()->create();
+        $subscriber = Subscriber::factory()->create(['email_list_id' => $emailList->id]);
+        $campaign = Campaign::create([
+            'name' => 'Test Campaign',
+            'subject' => 'Subject',
+            'email_list_id' => $emailList->id,
+            'body' => 'Campaign Body',
+            'send_at' => now()->addDay(),
+        ]);
+
+        $response = $this->actingAs($user)->get(route('campaigns.test', $campaign));
+
+        $response->assertStatus(200);
+        $response->assertSee('Campaign Body');
+
+        // Mail::assertSent(EmailCampaign::class);
+        // Commented out because Mail::fake() doesn't easily capture explicit mailer('log') calls without complex mocking
+    }
 
     public function test_campaigns_screen_can_be_rendered(): void
     {

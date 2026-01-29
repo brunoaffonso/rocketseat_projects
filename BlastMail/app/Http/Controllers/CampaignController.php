@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\EmailCampaign;
 use App\Models\Campaign;
 use App\Models\EmailList;
 use App\Models\EmailTemplate;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Mail;
 
 class CampaignController extends Controller
 {
@@ -19,7 +20,7 @@ class CampaignController extends Controller
             })
             ->when($request->trashed, function ($query) {
                 $query->withTrashed();
-            }) // Simplified: To support "only trashed" or "with trashed", logic can be refined. 
+            }) // Simplified: To support "only trashed" or "with trashed", logic can be refined.
             // User requirement: "checkbox to show excluded". This implies `withTrashed`.
             ->orderBy('id', 'desc')
             ->paginate(10)
@@ -107,5 +108,17 @@ class CampaignController extends Controller
 
         return redirect()->route('campaigns.index')
             ->with('status', 'Campaign deleted successfully!');
+    }
+
+    public function test(Campaign $campaign)
+    {
+        $campaign->load('emailList.subscribers');
+
+        foreach ($campaign->emailList->subscribers as $subscriber) {
+            Mail::to($subscriber->email)
+                ->send(new EmailCampaign($campaign));
+        }
+
+        return new EmailCampaign($campaign);
     }
 }

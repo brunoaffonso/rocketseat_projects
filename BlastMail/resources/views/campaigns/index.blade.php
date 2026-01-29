@@ -52,8 +52,9 @@
                 <x-table class="table-fixed w-full">
                     <x-table.thead>
                         <x-table.tr>
+                            <x-table.th class="w-[5%]">#</x-table.th>
                             <x-table.th class="w-[20%]">{{ __('Name') }}</x-table.th>
-                            <x-table.th class="w-[30%]">{{ __('Subject') }}</x-table.th>
+                            <x-table.th class="w-[25%]">{{ __('Subject') }}</x-table.th>
                             <x-table.th class="w-[20%] whitespace-nowrap">{{ __('Scheduled For') }}</x-table.th>
                             <x-table.th class="w-[10%] whitespace-nowrap">{{ __('Status') }}</x-table.th>
                             <x-table.th class="w-[20%] text-right whitespace-nowrap">{{ __('Actions') }}</x-table.th>
@@ -62,6 +63,9 @@
                     <x-table.tbody>
                         @forelse ($campaigns as $campaign)
                             <x-table.tr class="{{ $campaign->trashed() ? 'bg-red-50 dark:bg-red-900/20' : '' }}">
+                                <x-table.td class="whitespace-nowrap align-top font-medium text-gray-900 dark:text-gray-100">
+                                    {{ $campaign->id }}
+                                </x-table.td>
                                 <x-table.td class="!whitespace-normal !break-words align-top">
                                     <div class="font-medium text-gray-900 dark:text-gray-100">{{ $campaign->name }}</div>
                                     @if($campaign->trashed())
