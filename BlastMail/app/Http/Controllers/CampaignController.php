@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\EmailCampaign;
+use App\Jobs\SendEmailCampaign;
 use App\Models\Campaign;
 use App\Models\EmailList;
 use App\Models\EmailTemplate;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class CampaignController extends Controller
 {
@@ -57,7 +56,9 @@ class CampaignController extends Controller
 
         unset($validated['schedule_type']); // Remove generic field not in DB
 
-        Campaign::create($validated);
+        $campaign = Campaign::create($validated);
+
+        SendEmailCampaign::dispatchAfterResponse($campaign);
 
         return redirect()->route('campaigns.index')
             ->with('status', 'Campaign created successfully!');
@@ -98,6 +99,8 @@ class CampaignController extends Controller
 
         $campaign->update($validated);
 
+        SendEmailCampaign::dispatchAfterResponse($campaign);
+
         return redirect()->route('campaigns.index')
             ->with('status', 'Campaign updated successfully!');
     }
@@ -112,13 +115,8 @@ class CampaignController extends Controller
 
     public function test(Campaign $campaign)
     {
-        $campaign->load('emailList.subscribers');
+        SendEmailCampaign::dispatch($campaign);
 
-        foreach ($campaign->emailList->subscribers as $subscriber) {
-            Mail::to($subscriber->email)
-                ->send(new EmailCampaign($campaign));
-        }
-
-        return new EmailCampaign($campaign);
+        return back()->with('status', 'Test email queued!');
     }
 }
