@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/email-list/{emailList}/subscribers/create', [SubscriberController::class, 'create'])->name('subscribers.create');
     Route::post('/email-list/{emailList}/subscribers', [SubscriberController::class, 'store'])->name('subscribers.store');
     Route::delete('/email-list/{emailList}/subscribers/{subscriber}', [SubscriberController::class, 'destroy'])->name('subscribers.destroy');
+
+    Route::resource('campaigns', \App\Http\Controllers\CampaignController::class);
 });
 
 require __DIR__ . '/auth.php';
