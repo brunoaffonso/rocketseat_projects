@@ -24,16 +24,27 @@
                 <div class="px-8 py-6 border-b border-gray-100 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-800/50">
                     <h1 class="text-xl font-bold text-gray-900 dark:text-gray-100">{{ $emailTemplate->name }}</h1>
                     <div class="mt-2 text-sm text-gray-500 dark:text-gray-400 flex flex-col gap-1">
-                        <p><span class="font-semibold">{{ __('From') }}:</span> {{ config('app.name') }} &lt;noreply@{{
-                            parse_url(config('app.url'), PHP_URL_HOST) }}&gt;</p>
-                        <p><span class="font-semibold">{{ __('Subject') }}:</span> {{ $emailTemplate->name }}</p>
+                        <p>
+                            <span class="font-semibold">{{ __('From') }}:</span>
+                            {{ config('mail.from.name') }} &lt;{{ config('mail.from.address') }}&gt;
+                        </p>
+                        <p>
+                            <span class="font-semibold">{{ __('To') }}:</span>
+                            {{ auth()->user()->name }} &lt;{{ auth()->user()->email }}&gt; ({{ __('Preview') }})
+                        </p>
+                        <p>
+                            <span class="font-semibold">{{ __('Subject') }}:</span>
+                            {{ $emailTemplate->name }}
+                        </p>
                     </div>
                 </div>
 
                 <!-- Email Content -->
-                <div class="px-8 py-10 bg-white dark:bg-gray-900">
-                    <div class="ql-editor !p-0 prose dark:prose-invert max-w-none">
-                        {!! $emailTemplate->body !!}
+                <div class="px-8 py-10 bg-white dark:bg-gray-900 shadow-inner">
+                    <div class="bg-white p-8 rounded-lg border border-gray-100 text-gray-900">
+                        <div class="ql-editor !p-0 prose max-w-none">
+                            {!! $emailTemplate->body !!}
+                        </div>
                     </div>
                 </div>
 
