@@ -2,15 +2,12 @@
 
 namespace App\Models;
 
-use App\Observers\CampaignObserver;
-use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[ObservedBy(CampaignObserver::class)]
 class Campaign extends Model
 {
     /** @use HasFactory<\Database\Factories\CampaignFactory> */
