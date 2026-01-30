@@ -1,9 +1,10 @@
 {
     "mcpServers": {
         "laravel-boost": {
-            "command": "php",
+            "command": "wsl.exe",
             "args": [
-                "artisan",
+                "/home/bruno/.config/herd-lite/bin/php",
+                "/home/bruno/dev/rocketseat/BlastMail/artisan",
                 "boost:mcp"
             ]
         }

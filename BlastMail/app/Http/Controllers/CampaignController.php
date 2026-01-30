@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\SendEmailCampaign;
+use App\Jobs\SendEmailsCampaign;
 use App\Models\Campaign;
 use App\Models\EmailList;
 use App\Models\EmailTemplate;
@@ -58,7 +58,7 @@ class CampaignController extends Controller
 
         $campaign = Campaign::create($validated);
 
-        SendEmailCampaign::dispatchAfterResponse($campaign);
+        SendEmailsCampaign::dispatchAfterResponse($campaign);
 
         return redirect()->route('campaigns.index')
             ->with('status', 'Campaign created successfully!');
@@ -99,7 +99,7 @@ class CampaignController extends Controller
 
         $campaign->update($validated);
 
-        SendEmailCampaign::dispatchAfterResponse($campaign);
+        SendEmailsCampaign::dispatchAfterResponse($campaign);
 
         return redirect()->route('campaigns.index')
             ->with('status', 'Campaign updated successfully!');
@@ -115,7 +115,7 @@ class CampaignController extends Controller
 
     public function test(Campaign $campaign)
     {
-        SendEmailCampaign::dispatch($campaign);
+        SendEmailsCampaign::dispatch($campaign);
 
         return back()->with('status', 'Test email queued!');
     }

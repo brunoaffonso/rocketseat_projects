@@ -204,6 +204,7 @@
                 step: 1,
                 lists: @json($emailLists->mapWithKeys(fn($item) => [$item->id => ['title' => $item->title, 'count' => $item->subscribers_count]])),
                 templates: @json($templates->pluck('name', 'id')),
+                templateBodies: @json($templates->pluck('body', 'id')),
                 form: {
                     name: '{{ old('name', $campaign->name) }}',
                     subject: '{{ old('subject', $campaign->subject) }}',
@@ -247,6 +248,21 @@
                         if (!this.form.name || !this.form.subject || !this.form.email_list_id) {
                             alert('Please fill in all required fields.');
                             return;
+                        }
+
+                        // Populate body from template if selected and body is currently empty (or matches previous template)
+                        if (this.form.template_id) {
+                            const templateBody = this.templateBodies[this.form.template_id];
+                            if (!this.form.body || this.form.body === '<p><br></p>') {
+                                this.form.body = templateBody;
+                                this.editor.root.innerHTML = templateBody;
+                            }
+                        } else {
+                            // If they explicitly chose "No Template" and body is empty, keep it empty
+                            if (!this.form.body || this.form.body === '<p><br></p>') {
+                                this.form.body = '';
+                                this.editor.root.innerHTML = '';
+                            }
                         }
                     }
                      if (this.step === 2) {

@@ -203,6 +203,7 @@
                 step: 1,
                 lists: @json($emailLists->mapWithKeys(fn($item) => [$item->id => ['title' => $item->title, 'count' => $item->subscribers_count]])),
                 templates: @json($templates->pluck('name', 'id')),
+                templateBodies: @json($templates->pluck('body', 'id')),
                 form: {
                     name: '{{ old('name') }}',
                     subject: '{{ old('subject') }}',
@@ -229,6 +230,9 @@
                     if (this.form.body) {
                         this.editor.root.innerHTML = this.form.body;
                     }
+
+                    // Watch for template changes to potentially clear body if user switches back to "None"
+                    // and hasn't moved to step 2 yet. 
                 },
                 getListTitle(id) {
                     if (!id || !this.lists[id]) return 'Unknown List';
@@ -246,6 +250,25 @@
                         if (!this.form.name || !this.form.subject || !this.form.email_list_id) {
                             alert('Please fill in all required fields.');
                             return;
+                        }
+
+                        // Populate body from template if selected and body is currently empty (or matches previous template)
+                        if (this.form.template_id) {
+                            const templateBody = this.templateBodies[this.form.template_id];
+                            // Only overwrite if current body is empty or we haven't edited it much
+                            // To be safe and follow user request: "if I select, it comes filled"
+                            // If they go back and change template, it should probably refill.
+                            if (!this.form.body || this.form.body === '<p><br></p>') {
+                                this.form.body = templateBody;
+                                this.editor.root.innerHTML = templateBody;
+                            }
+                        } else {
+                            // If no template, and body was from a template, we might want to clear it?
+                            // User: "Se eu não selecionar um template, no segundo step o campo texto será apresentado vazio."
+                            if (!this.form.body || this.form.body === '<p><br></p>') {
+                                this.form.body = '';
+                                this.editor.root.innerHTML = '';
+                            }
                         }
                     }
                      if (this.step === 2) {
