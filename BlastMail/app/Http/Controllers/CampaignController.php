@@ -76,7 +76,7 @@ class CampaignController extends Controller
             ->get();
 
         $chartData = [
-            'labels' => $performanceData->pluck('date')->map(fn($date) => \Carbon\Carbon::parse($date)->format('M d'))->toArray(),
+            'labels' => $performanceData->pluck('date')->map(fn ($date) => \Carbon\Carbon::parse($date)->format('M d'))->toArray(),
             'opens' => $performanceData->pluck('opened')->toArray(),
             'clicks' => $performanceData->pluck('clicked')->toArray(),
         ];
@@ -133,5 +133,10 @@ class CampaignController extends Controller
         SendEmailsCampaign::dispatch($campaign);
 
         return back()->with('status', 'Test email queued!');
+    }
+
+    public function preview(Campaign $campaign)
+    {
+        return new \App\Mail\EmailCampaign($campaign);
     }
 }

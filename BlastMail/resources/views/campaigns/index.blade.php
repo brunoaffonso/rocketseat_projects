@@ -57,6 +57,7 @@
                             <x-table.th class="w-[25%]">{{ __('Subject') }}</x-table.th>
                             <x-table.th class="w-[20%] whitespace-nowrap">{{ __('Scheduled For') }}</x-table.th>
                             <x-table.th class="w-[10%] whitespace-nowrap">{{ __('Status') }}</x-table.th>
+                            <x-table.th class="w-[10%] whitespace-nowrap">{{ __('Performance') }}</x-table.th>
                             <x-table.th class="w-[20%] text-right whitespace-nowrap">{{ __('Actions') }}</x-table.th>
                         </x-table.tr>
                     </x-table.thead>
@@ -84,6 +85,16 @@
                                     @else
                                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">Scheduled</span>
                                     @endif
+                                </x-table.td>
+                                <x-table.td class="whitespace-nowrap align-top">
+                                    <div class="flex flex-col text-xs space-y-1">
+                                        <span class="text-indigo-600 dark:text-indigo-400 font-medium whitespace-nowrap">
+                                            Opens: {{ $campaign->statistics['open_rate'] }}%
+                                        </span>
+                                        <span class="text-blue-600 dark:text-blue-400 font-medium whitespace-nowrap">
+                                            Clicks: {{ $campaign->statistics['click_rate'] }}%
+                                        </span>
+                                    </div>
                                 </x-table.td>
                                 <x-table.td class="text-right whitespace-nowrap align-top">
                                     <div class="flex justify-end items-center gap-2">

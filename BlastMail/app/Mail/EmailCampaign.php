@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\Campaign;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -15,8 +16,10 @@ class EmailCampaign extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public \App\Models\Campaign $campaign)
-    {
+    public function __construct(
+        public Campaign $campaign,
+        public ?\App\Models\CampaignMail $campaignMail = null
+    ) {
         //
     }
 
@@ -38,9 +41,34 @@ class EmailCampaign extends Mailable
         return new Content(
             markdown: 'emails.campaign',
             with: [
-                'body' => $this->campaign->body,
+                'body' => ($this->campaign->track_click && $this->campaignMail)
+                    ? $this->processLinks($this->campaign->body)
+                    : $this->campaign->body,
+                'uuid' => ($this->campaign->track_open && $this->campaignMail)
+                    ? $this->campaignMail->uuid
+                    : null,
             ],
         );
+    }
+
+    protected function processLinks(string $body): string
+    {
+        return preg_replace_callback('/<a\s+[^>]*?href=["\']([^"\']+)["\']/i', function ($matches) {
+            $originalUrl = $matches[1];
+
+            // Avoid tracking internal or mailto links if necessary,
+            // but for simplicity we track everything that looks like a URL.
+            if (str_starts_with($originalUrl, '#') || str_starts_with($originalUrl, 'mailto:')) {
+                return $matches[0];
+            }
+
+            $trackingUrl = route('track.click', [
+                'uuid' => $this->campaignMail->uuid,
+                'url' => $originalUrl,
+            ]);
+
+            return str_replace($originalUrl, $trackingUrl, $matches[0]);
+        }, $body);
     }
 
     /**

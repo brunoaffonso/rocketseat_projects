@@ -1,6 +1,8 @@
 <x-mail::message>
+
 {!! $body !!}
 
-Thanks,
-{{ config('app.name') }}
+@if(isset($uuid))
+<img src="{{ route('track.open', $uuid) }}" width="1" height="1" style="display: none;">
+@endif
 </x-mail::message>

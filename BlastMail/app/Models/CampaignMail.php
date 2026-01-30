@@ -13,6 +13,7 @@ class CampaignMail extends Model
     protected $fillable = [
         'campaign_id',
         'subscriber_id',
+        'uuid',
         'sent_at',
         'clicks',
         'openings',

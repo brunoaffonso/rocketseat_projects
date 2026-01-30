@@ -96,7 +96,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 0 1 .89-1.664l7-4.666a2 2 0 0 1 2.22 0l7 4.666A2 2 0 0 1 21 10.07V19M3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2M3 19l6.75-4.5M21 19l-6.75-4.5m0 0a2 2 0 0 0-2.5 0l-1.5 1a2 2 0 0 1-2.5 0l-1.5-1A2 2 0 0 0 6.75 14.5M15 14.5V21M9 14.5V21" />
                             </svg>
                             {{ __('Opened') }}
-                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-300">{{ $campaign->statistics['opened'] }}</span>
+                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-300">{{ $campaign->statistics['total_openings'] }}</span>
                         </button>
                         <button @click="activeTab = 'clicked'" 
                             :class="activeTab === 'clicked' ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300'"
@@ -105,7 +105,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
                             </svg>
                             {{ __('Clicked') }}
-                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">{{ $campaign->statistics['clicked'] }}</span>
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">{{ $campaign->statistics['total_clicks'] }}</span>
                         </button>
                     </nav>
                 </div>
@@ -122,7 +122,7 @@
                         <div class="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 shadow-sm sm:rounded-xl border border-gray-100 dark:border-gray-700">
                             <span class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Opened') }}</span>
                             <div class="flex items-baseline gap-2">
-                                <span class="mt-2 text-3xl font-bold text-indigo-600 dark:text-indigo-400">{{ number_format($campaign->statistics['opened']) }}</span>
+                                <span class="mt-2 text-3xl font-bold text-indigo-600 dark:text-indigo-400">{{ number_format($campaign->statistics['total_openings']) }}</span>
                                 <span class="text-sm font-medium text-green-500">{{ $campaign->statistics['open_rate'] }}%</span>
                             </div>
                         </div>
@@ -130,7 +130,7 @@
                         <div class="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 shadow-sm sm:rounded-xl border border-gray-100 dark:border-gray-700">
                             <span class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Clicked') }}</span>
                             <div class="flex items-baseline gap-2">
-                                <span class="mt-2 text-3xl font-bold text-blue-600 dark:text-blue-400">{{ number_format($campaign->statistics['clicked']) }}</span>
+                                <span class="mt-2 text-3xl font-bold text-blue-600 dark:text-blue-400">{{ number_format($campaign->statistics['total_clicks']) }}</span>
                                 <span class="text-sm font-medium text-green-500">{{ $campaign->statistics['click_rate'] }}%</span>
                             </div>
                         </div>
@@ -166,7 +166,7 @@
                                     <x-table.th>{{ __('Subscriber') }}</x-table.th>
                                     <x-table.th>{{ __('Status') }}</x-table.th>
                                     <x-table.th>{{ __('Delivered At') }}</x-table.th>
-                                    <x-table.th class="text-right">{{ __('Last Opened') }}</x-table.th>
+                                    <x-table.th class="text-right">{{ __('Openings') }}</x-table.th>
                                 </x-table.tr>
                             </x-table.thead>
                             <x-table.tbody>
@@ -191,7 +191,9 @@
                                         <x-table.td class="text-sm text-gray-500 dark:text-gray-400">
                                             {{ $mail->sent_at ? $mail->sent_at->format('M d, H:i') : 'N/A' }}
                                         </x-table.td>
-                                        <x-table.td class="text-right text-sm text-gray-500 dark:text-gray-400">{{ $mail->updated_at->diffForHumans() }}</x-table.td>
+                                        <x-table.td class="text-right text-sm font-medium text-indigo-600 dark:text-indigo-400">
+                                            {{ $mail->openings }}
+                                        </x-table.td>
                                     </x-table.tr>
                                 @empty
                                     <x-table.tr>
@@ -211,8 +213,7 @@
                                 <x-table.tr>
                                     <x-table.th>{{ __('Subscriber') }}</x-table.th>
                                     <x-table.th>{{ __('Clicks') }}</x-table.th>
-                                    <x-table.th>{{ __('Delivered At') }}</x-table.th>
-                                    <x-table.th class="text-right">{{ __('Last Clicked') }}</x-table.th>
+                                    <x-table.th class="text-right">{{ __('Delivered At') }}</x-table.th>
                                 </x-table.tr>
                             </x-table.thead>
                             <x-table.tbody>
@@ -231,10 +232,9 @@
                                                 </span>
                                             </div>
                                         </x-table.td>
-                                        <x-table.td class="text-sm text-gray-500 dark:text-gray-400">
+                                        <x-table.td class="text-right text-sm text-gray-500 dark:text-gray-400">
                                             {{ $mail->sent_at ? $mail->sent_at->format('M d, H:i') : 'N/A' }}
                                         </x-table.td>
-                                        <x-table.td class="text-right text-sm text-gray-500 dark:text-gray-400">{{ $mail->updated_at->diffForHumans() }}</x-table.td>
                                     </x-table.tr>
                                 @empty
                                     <x-table.tr>

@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailListController;
 use App\Http\Controllers\EmailTemplateController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubscriberController;
+use App\Http\Controllers\TrackController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'home');
@@ -28,8 +30,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/email-list/{emailList}/subscribers', [SubscriberController::class, 'store'])->name('subscribers.store');
     Route::delete('/email-list/{emailList}/subscribers/{subscriber}', [SubscriberController::class, 'destroy'])->name('subscribers.destroy');
 
-    Route::get('/campaigns/{campaign}/test', [\App\Http\Controllers\CampaignController::class, 'test'])->name('campaigns.test');
-    Route::resource('campaigns', \App\Http\Controllers\CampaignController::class);
+    Route::get('/campaigns/{campaign}/test', [CampaignController::class, 'test'])->name('campaigns.test');
+    Route::get('/campaigns/{campaign}/preview', [CampaignController::class, 'preview'])->name('campaigns.preview');
+    Route::resource('campaigns', CampaignController::class);
 });
+
+Route::get('/track/open/{uuid}', [TrackController::class, 'open'])->name('track.open');
+Route::get('/track/click/{uuid}', [TrackController::class, 'click'])->name('track.click');
 
 require __DIR__.'/auth.php';
