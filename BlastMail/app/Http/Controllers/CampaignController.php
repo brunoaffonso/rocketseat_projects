@@ -66,7 +66,22 @@ class CampaignController extends Controller
 
     public function show(Campaign $campaign)
     {
-        return view('campaigns.show', compact('campaign'));
+        $campaign->load(['mails.subscriber', 'emailList', 'template']);
+
+        // Prepare chart data (last 7 days or since campaign started)
+        $performanceData = $campaign->mails()
+            ->selectRaw('DATE(COALESCE(sent_at, created_at)) as date, count(*) as sent, sum(case when openings > 0 then 1 else 0 end) as opened, sum(case when clicks > 0 then 1 else 0 end) as clicked')
+            ->groupBy('date')
+            ->orderBy('date')
+            ->get();
+
+        $chartData = [
+            'labels' => $performanceData->pluck('date')->map(fn($date) => \Carbon\Carbon::parse($date)->format('M d'))->toArray(),
+            'opens' => $performanceData->pluck('opened')->toArray(),
+            'clicks' => $performanceData->pluck('clicked')->toArray(),
+        ];
+
+        return view('campaigns.show', compact('campaign', 'chartData'));
     }
 
     public function edit(Campaign $campaign)

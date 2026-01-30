@@ -96,7 +96,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 19v-8.93a2 2 0 0 1 .89-1.664l7-4.666a2 2 0 0 1 2.22 0l7 4.666A2 2 0 0 1 21 10.07V19M3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2M3 19l6.75-4.5M21 19l-6.75-4.5m0 0a2 2 0 0 0-2.5 0l-1.5 1a2 2 0 0 1-2.5 0l-1.5-1A2 2 0 0 0 6.75 14.5M15 14.5V21M9 14.5V21" />
                             </svg>
                             {{ __('Opened') }}
-                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-300">458</span>
+                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-300">{{ $campaign->statistics['opened'] }}</span>
                         </button>
                         <button @click="activeTab = 'clicked'" 
                             :class="activeTab === 'clicked' ? 'border-indigo-500 text-indigo-600 dark:text-indigo-400' : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300'"
@@ -105,7 +105,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" />
                             </svg>
                             {{ __('Clicked') }}
-                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">112</span>
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/40 dark:text-blue-300">{{ $campaign->statistics['clicked'] }}</span>
                         </button>
                     </nav>
                 </div>
@@ -116,22 +116,22 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div class="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 shadow-sm sm:rounded-xl border border-gray-100 dark:border-gray-700">
                             <span class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Total Sent') }}</span>
-                            <span class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">1,250</span>
+                            <span class="mt-2 text-3xl font-bold text-gray-900 dark:text-white">{{ number_format($campaign->statistics['sent']) }}</span>
                         </div>
                         
                         <div class="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 shadow-sm sm:rounded-xl border border-gray-100 dark:border-gray-700">
                             <span class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Opened') }}</span>
                             <div class="flex items-baseline gap-2">
-                                <span class="mt-2 text-3xl font-bold text-indigo-600 dark:text-indigo-400">458</span>
-                                <span class="text-sm font-medium text-green-500">36.6%</span>
+                                <span class="mt-2 text-3xl font-bold text-indigo-600 dark:text-indigo-400">{{ number_format($campaign->statistics['opened']) }}</span>
+                                <span class="text-sm font-medium text-green-500">{{ $campaign->statistics['open_rate'] }}%</span>
                             </div>
                         </div>
 
                         <div class="flex flex-col items-center justify-center p-6 bg-white dark:bg-gray-800 shadow-sm sm:rounded-xl border border-gray-100 dark:border-gray-700">
                             <span class="text-sm font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">{{ __('Clicked') }}</span>
                             <div class="flex items-baseline gap-2">
-                                <span class="mt-2 text-3xl font-bold text-blue-600 dark:text-blue-400">112</span>
-                                <span class="text-sm font-medium text-green-500">8.9%</span>
+                                <span class="mt-2 text-3xl font-bold text-blue-600 dark:text-blue-400">{{ number_format($campaign->statistics['clicked']) }}</span>
+                                <span class="text-sm font-medium text-green-500">{{ $campaign->statistics['click_rate'] }}%</span>
                             </div>
                         </div>
                     </div>
@@ -165,40 +165,39 @@
                                 <x-table.tr>
                                     <x-table.th>{{ __('Subscriber') }}</x-table.th>
                                     <x-table.th>{{ __('Status') }}</x-table.th>
+                                    <x-table.th>{{ __('Delivered At') }}</x-table.th>
                                     <x-table.th class="text-right">{{ __('Last Opened') }}</x-table.th>
                                 </x-table.tr>
                             </x-table.thead>
                             <x-table.tbody>
-                                <x-table.tr>
-                                    <x-table.td>
-                                        <div class="flex flex-col">
-                                            <span class="font-medium text-gray-900 dark:text-white text-sm">John Doe</span>
-                                            <span class="text-xs text-gray-500 dark:text-gray-400">john.doe@example.com</span>
-                                        </div>
-                                    </x-table.td>
-                                    <x-table.td>
-                                        <div class="flex gap-2">
-                                            <span class="inline-flex items-center rounded-md bg-indigo-50 dark:bg-indigo-900/30 px-2 py-1 text-xs font-medium text-indigo-700 dark:text-indigo-300 ring-1 ring-inset ring-indigo-700/10">Opened</span>
-                                            <span class="inline-flex items-center rounded-md bg-gray-50 dark:bg-gray-700 px-2 py-1 text-xs font-medium text-gray-500 dark:text-gray-400 ring-1 ring-inset ring-gray-700/10 opacity-50">Not Clicked</span>
-                                        </div>
-                                    </x-table.td>
-                                    <x-table.td class="text-right text-sm text-gray-500 dark:text-gray-400">2 mins ago</x-table.td>
-                                </x-table.tr>
-                                <x-table.tr>
-                                    <x-table.td>
-                                        <div class="flex flex-col">
-                                            <span class="font-medium text-gray-900 dark:text-white text-sm">Jane Smith</span>
-                                            <span class="text-xs text-gray-500 dark:text-gray-400">jane.smith@domain.com</span>
-                                        </div>
-                                    </x-table.td>
-                                    <x-table.td>
-                                        <div class="flex gap-2">
-                                            <span class="inline-flex items-center rounded-md bg-indigo-50 dark:bg-indigo-900/30 px-2 py-1 text-xs font-medium text-indigo-700 dark:text-indigo-300 ring-1 ring-inset ring-indigo-700/10">Opened</span>
-                                            <span class="inline-flex items-center rounded-md bg-blue-50 dark:bg-blue-900/30 px-2 py-1 text-xs font-medium text-blue-700 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10">Clicked</span>
-                                        </div>
-                                    </x-table.td>
-                                    <x-table.td class="text-right text-sm text-gray-500 dark:text-gray-400">15 mins ago</x-table.td>
-                                </x-table.tr>
+                                @forelse($campaign->mails->where('openings', '>', 0) as $mail)
+                                    <x-table.tr>
+                                        <x-table.td>
+                                            <div class="flex flex-col">
+                                                <span class="font-medium text-gray-900 dark:text-white text-sm">{{ $mail->subscriber->name }}</span>
+                                                <span class="text-xs text-gray-500 dark:text-gray-400">{{ $mail->subscriber->email }}</span>
+                                            </div>
+                                        </x-table.td>
+                                        <x-table.td>
+                                            <div class="flex gap-2">
+                                                <span class="inline-flex items-center rounded-md bg-indigo-50 dark:bg-indigo-900/30 px-2 py-1 text-xs font-medium text-indigo-700 dark:text-indigo-300 ring-1 ring-inset ring-indigo-700/10">Opened</span>
+                                                @if($mail->clicks > 0)
+                                                    <span class="inline-flex items-center rounded-md bg-blue-50 dark:bg-blue-900/30 px-2 py-1 text-xs font-medium text-blue-700 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10">Clicked</span>
+                                                @else
+                                                    <span class="inline-flex items-center rounded-md bg-gray-50 dark:bg-gray-700 px-2 py-1 text-xs font-medium text-gray-500 dark:text-gray-400 ring-1 ring-inset ring-gray-700/10 opacity-50">Not Clicked</span>
+                                                @endif
+                                            </div>
+                                        </x-table.td>
+                                        <x-table.td class="text-sm text-gray-500 dark:text-gray-400">
+                                            {{ $mail->sent_at ? $mail->sent_at->format('M d, H:i') : 'N/A' }}
+                                        </x-table.td>
+                                        <x-table.td class="text-right text-sm text-gray-500 dark:text-gray-400">{{ $mail->updated_at->diffForHumans() }}</x-table.td>
+                                    </x-table.tr>
+                                @empty
+                                    <x-table.tr>
+                                        <x-table.td colspan="4" class="text-center py-4 text-gray-500">{{ __('No opens tracked yet.') }}</x-table.td>
+                                    </x-table.tr>
+                                @endforelse
                             </x-table.tbody>
                         </x-table>
                     </div>
@@ -211,35 +210,37 @@
                             <x-table.thead>
                                 <x-table.tr>
                                     <x-table.th>{{ __('Subscriber') }}</x-table.th>
-                                    <x-table.th>{{ __('Link Clicked') }}</x-table.th>
+                                    <x-table.th>{{ __('Clicks') }}</x-table.th>
+                                    <x-table.th>{{ __('Delivered At') }}</x-table.th>
                                     <x-table.th class="text-right">{{ __('Last Clicked') }}</x-table.th>
                                 </x-table.tr>
                             </x-table.thead>
                             <x-table.tbody>
-                                <x-table.tr>
-                                    <x-table.td>
-                                        <div class="flex flex-col">
-                                            <span class="font-medium text-gray-900 dark:text-white text-sm">Jane Smith</span>
-                                            <span class="text-xs text-gray-500 dark:text-gray-400">jane.smith@domain.com</span>
-                                        </div>
-                                    </x-table.td>
-                                    <x-table.td>
-                                        <span class="text-sm text-indigo-600 dark:text-indigo-400 underline decoration-indigo-500/30">https://example.com/promo-link</span>
-                                    </x-table.td>
-                                    <x-table.td class="text-right text-sm text-gray-500 dark:text-gray-400">15 mins ago</x-table.td>
-                                </x-table.tr>
-                                <x-table.tr>
-                                    <x-table.td>
-                                        <div class="flex flex-col">
-                                            <span class="font-medium text-gray-900 dark:text-white text-sm">Emily White</span>
-                                            <span class="text-xs text-gray-500 dark:text-gray-400">emily.w@work.co</span>
-                                        </div>
-                                    </x-table.td>
-                                    <x-table.td>
-                                        <span class="text-sm text-indigo-600 dark:text-indigo-400 underline decoration-indigo-500/30">https://example.com/another-link</span>
-                                    </x-table.td>
-                                    <x-table.td class="text-right text-sm text-gray-500 dark:text-gray-400">3 hours ago</x-table.td>
-                                </x-table.tr>
+                                @forelse($campaign->mails->where('clicks', '>', 0) as $mail)
+                                    <x-table.tr>
+                                        <x-table.td>
+                                            <div class="flex flex-col">
+                                                <span class="font-medium text-gray-900 dark:text-white text-sm">{{ $mail->subscriber->name }}</span>
+                                                <span class="text-xs text-gray-500 dark:text-gray-400">{{ $mail->subscriber->email }}</span>
+                                            </div>
+                                        </x-table.td>
+                                        <x-table.td>
+                                            <div class="flex items-center gap-2">
+                                                <span class="inline-flex items-center rounded-md bg-blue-50 dark:bg-blue-900/30 px-2.5 py-0.5 text-sm font-medium text-blue-700 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10">
+                                                    {{ $mail->clicks }} {{ str('click')->plural($mail->clicks) }}
+                                                </span>
+                                            </div>
+                                        </x-table.td>
+                                        <x-table.td class="text-sm text-gray-500 dark:text-gray-400">
+                                            {{ $mail->sent_at ? $mail->sent_at->format('M d, H:i') : 'N/A' }}
+                                        </x-table.td>
+                                        <x-table.td class="text-right text-sm text-gray-500 dark:text-gray-400">{{ $mail->updated_at->diffForHumans() }}</x-table.td>
+                                    </x-table.tr>
+                                @empty
+                                    <x-table.tr>
+                                        <x-table.td colspan="4" class="text-center py-4 text-gray-500">{{ __('No clicks tracked yet.') }}</x-table.td>
+                                    </x-table.tr>
+                                @endforelse
                             </x-table.tbody>
                         </x-table>
                     </div>
@@ -261,11 +262,11 @@
             new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['Jan 24', 'Jan 25', 'Jan 26', 'Jan 27', 'Jan 28', 'Jan 29', 'Jan 30'],
+                    labels: {!! json_encode($chartData['labels']) !!},
                     datasets: [
                         {
                             label: 'Opens',
-                            data: [120, 190, 300, 250, 420, 458, 440],
+                            data: {!! json_encode($chartData['opens']) !!},
                             borderColor: '#6366f1',
                             backgroundColor: 'rgba(99, 102, 241, 0.1)',
                             fill: true,
@@ -275,7 +276,7 @@
                         },
                         {
                             label: 'Clicks',
-                            data: [30, 45, 80, 70, 100, 112, 105],
+                            data: {!! json_encode($chartData['clicks']) !!},
                             borderColor: '#3b82f6',
                             backgroundColor: 'rgba(59, 130, 246, 0.1)',
                             fill: true,
