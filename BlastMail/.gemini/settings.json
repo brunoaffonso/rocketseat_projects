@@ -4,7 +4,7 @@
             "command": "wsl.exe",
             "args": [
                 "/home/bruno/.config/herd-lite/bin/php",
-                "/home/bruno/dev/rocketseat/BlastMail/artisan",
+                "/home/bruno/dev/rocketseat_projects/BlastMail/artisan",
                 "boost:mcp"
             ]
         }
